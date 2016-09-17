@@ -1,9 +1,11 @@
 package sk.mrtn.library.client.ticker;
 
 import com.google.gwt.logging.client.LogConfiguration;
+import com.google.gwt.user.client.Timer;
 import jsinterop.annotations.JsFunction;
 import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
+import sk.mrtn.library.client.utils.stats.Stats;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,6 +20,23 @@ import java.util.logging.Logger;
 public class Ticker implements ITicker {
 
     private final ITick tick;
+    private Stats stats;
+    private StatsTimer statsTimer;
+
+    private static class StatsTimer extends Timer {
+
+        private Stats stats;
+
+        public StatsTimer(final Stats stats) {
+            this.stats = stats;
+        }
+
+        @Override
+        public void run() {
+            this.stats.update();
+        }
+
+    }
 
     @FunctionalInterface
     @JsFunction
@@ -60,6 +79,16 @@ public class Ticker implements ITicker {
                 onTick();
             }
         };
+    }
+
+    @Override
+    public void setStats(final Stats stats) {
+        this.stats = stats;
+        if (this.stats != null) {
+            this.statsTimer = new StatsTimer(stats);
+            this.statsTimer.scheduleRepeating(1000);
+            this.stats.update();
+        }
     }
 
     @Override
@@ -163,6 +192,9 @@ public class Ticker implements ITicker {
 
     private void onTick() {
         if (this.state == State.RUNNING) {
+            if (this.stats != null) {
+                this.stats.begin();
+            }
             this.currentTick = getCurrentTick();
             updateDeltaTick();
             for (TickableRegistration tickableRegistration : new ArrayList<>(this.tickables)) {
@@ -171,6 +203,9 @@ public class Ticker implements ITicker {
                 this.tickRequested = this.tickRequested || tickable.shouldTick();
             }
             this.previousTick = this.currentTick;
+            if (this.stats != null) {
+                this.stats.end();
+            }
             if (shouldTick()) {
                 this.tickRequested = false;
                 this.requestId = requestAnimationFrame(this.tick);
