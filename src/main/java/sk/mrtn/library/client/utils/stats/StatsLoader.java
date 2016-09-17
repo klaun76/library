@@ -25,7 +25,7 @@ public interface StatsLoader {
             injected = true;
 
             final Resources res = GWT.create(Resources.class);
-            ScriptInjector.FromString instance = ScriptInjector.fromString(res.hammer().getText());
+            ScriptInjector.FromString instance = ScriptInjector.fromString(res.javascript().getText());
             instance.setWindow(ScriptInjector.TOP_WINDOW);
             instance.inject();
             Logger.getLogger("common").fine("Stats loaded");
@@ -33,22 +33,25 @@ public interface StatsLoader {
 
         protected interface Resources extends ClientBundle {
             @Source("stats.min.js")
-            TextResource hammer();
+            TextResource javascript();
         }
 
         /**
-         * I had problem with dagger injection
-         * so i added classic singleton call here :-(
+         * I had problem Stats constructor does not return instanceof Stats
+         * so cast fails when injection is in process
          * @return
          */
         public static Stats getStats() {
             if (stats == null) {
                 ensureInjected();
-                stats = new Stats();
+                stats = create();
             }
             return stats;
         }
 
+        private static native Stats create() /*-{
+            return new $wnd.Stats();
+        }-*/;
 
     }
 

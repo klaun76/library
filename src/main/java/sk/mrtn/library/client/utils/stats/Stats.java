@@ -3,46 +3,39 @@ package sk.mrtn.library.client.utils.stats;
 /**
  * Created by martinliptak on 28/08/16.
  * http://github.com/mrdoob/stats.js
+ * javascript Function does not return Type Stats, but
+ * new Object. Injection does some checking for type of
+ * and at the time of creation i could not find better
+ * solution to a problem
  */
 
 import elemental.dom.Node;
-import jsinterop.annotations.*;
+import jsinterop.annotations.JsMethod;
+import jsinterop.annotations.JsProperty;
+import jsinterop.annotations.JsType;
 
-import javax.inject.Inject;
+@JsType(isNative = true)
+public interface Stats {
 
-@JsType(isNative = true, namespace = JsPackage.GLOBAL)
-public class Stats {
+    @JsProperty(name = "REVISION")
+    int getREVISION();
 
-    // PUBLIC FIELDS
-    @JsProperty
-    public int REVISION;
-
-    @JsProperty
-    public Node dom;
-
-    @JsProperty
-    public Node domElement;
-
-    @Inject
-    @JsConstructor
-    public Stats(){}
-
-    // PUBLIC METHODS
-    @JsMethod
-    public native void addPanel(Node a);
+    @JsProperty(name = "dom")
+    Node getDom();
 
     @JsMethod
-    public native void showPanel( int type ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    void addPanel(Node a);
 
     @JsMethod
-    public native void begin();
+    void showPanel(int type); // 0: fps, 1: ms, 2: mb, 3+: custom
 
     @JsMethod
-    public native void end();
+    void begin();
 
     @JsMethod
-    public native void update();
+    void end();
 
     @JsMethod
-    public native void setMode(int type);
+    void update();
+
 }

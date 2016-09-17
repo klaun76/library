@@ -15,6 +15,8 @@ import sk.mrtn.library.client.utils.UrlParametersManager;
 import sk.mrtn.library.client.utils.mobiledetect.MobileDetect;
 import sk.mrtn.library.client.utils.orientationchange.IOrientationChangeHandler;
 import sk.mrtn.library.client.utils.orientationchange.OrientationChangeHandler;
+import sk.mrtn.library.client.utils.stats.Stats;
+import sk.mrtn.library.client.utils.stats.StatsLoader;
 import sk.mrtn.library.client.window.IWindowStateController;
 import sk.mrtn.library.client.window.WindowStateController;
 
@@ -65,4 +67,16 @@ public class UtilsModule {
     IToggleButton provideIToggleButton(ToggleButton button) {
         return button;
     }
+
+    /**
+     * FIXME:
+     * @see {@link sk.mrtn.library.client.ticker.Ticker}
+     * @return
+     */
+    @Provides
+    @Singleton
+        Stats providesStats() {
+        return StatsLoader.Statics.getStats();
+    }
+
 }

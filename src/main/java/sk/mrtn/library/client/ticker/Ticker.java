@@ -7,6 +7,7 @@ import jsinterop.annotations.JsMethod;
 import jsinterop.annotations.JsPackage;
 import sk.mrtn.library.client.utils.stats.Stats;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
@@ -81,7 +82,14 @@ public class Ticker implements ITicker {
         };
     }
 
-    @Override
+
+    /**
+     * TODO try to make it optional somehow :-)
+     * remove injection from {@link sk.mrtn.library.client.UtilsModule}
+     * and move it only to project which uses stats
+     * @param stats
+     */
+    @Inject
     public void setStats(final Stats stats) {
         this.stats = stats;
         if (this.stats != null) {
