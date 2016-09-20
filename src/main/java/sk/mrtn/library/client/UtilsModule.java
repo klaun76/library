@@ -70,7 +70,7 @@ public class UtilsModule {
 
     /**
      * FIXME:
-     * @see {@link sk.mrtn.library.client.ticker.Ticker}
+     * @see {@link sk.mrtn.library.client.ticker.Ticker#setStats(Stats)}
      * @return
      */
     @Provides
