@@ -1,7 +1,7 @@
 package sk.mrtn.library.client.utils.orientationchange.events;
 
 import com.google.gwt.event.shared.GwtEvent;
-import sk.mrtn.library.client.utils.orientationchange.OrientationChangeHandler;
+import sk.mrtn.library.client.utils.orientationchange.WindowStateChangeHandler;
 
 /**
  * Created by martinliptak on 14/08/16.
@@ -9,9 +9,9 @@ import sk.mrtn.library.client.utils.orientationchange.OrientationChangeHandler;
  */
 public class OnOrientationChangedEvent extends GwtEvent<IOnOrientationChangedEventHandler> {
     public static final Type<IOnOrientationChangedEventHandler> TYPE = new Type<>();
-    private final OrientationChangeHandler.Orientation orientation;
+    private final WindowStateChangeHandler.Orientation orientation;
 
-    public OnOrientationChangedEvent(OrientationChangeHandler.Orientation orientation) {
+    public OnOrientationChangedEvent(WindowStateChangeHandler.Orientation orientation) {
 
         this.orientation = orientation;
     }
@@ -31,7 +31,7 @@ public class OnOrientationChangedEvent extends GwtEvent<IOnOrientationChangedEve
         return OnOrientationChangedEvent.class.getSimpleName();
     }
 
-    public OrientationChangeHandler.Orientation getOrientation() {
+    public WindowStateChangeHandler.Orientation getOrientation() {
         return orientation;
     }
 }

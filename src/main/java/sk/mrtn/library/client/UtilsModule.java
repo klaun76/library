@@ -13,8 +13,8 @@ import sk.mrtn.library.client.ui.togglebutton.ToggleButton;
 import sk.mrtn.library.client.utils.IUrlParametersManager;
 import sk.mrtn.library.client.utils.UrlParametersManager;
 import sk.mrtn.library.client.utils.mobiledetect.MobileDetect;
-import sk.mrtn.library.client.utils.orientationchange.IOrientationChangeHandler;
-import sk.mrtn.library.client.utils.orientationchange.OrientationChangeHandler;
+import sk.mrtn.library.client.utils.orientationchange.IWindowStateChangeHandler;
+import sk.mrtn.library.client.utils.orientationchange.WindowStateChangeHandler;
 import sk.mrtn.library.client.utils.stats.Stats;
 import sk.mrtn.library.client.utils.stats.StatsLoader;
 import sk.mrtn.library.client.window.IWindowStateController;
@@ -33,6 +33,7 @@ public class UtilsModule {
     IWindowStateController provideWindowController(WindowStateController controller) {
         return controller;
     }
+
     @Provides @Singleton
     IUrlParametersManager provideIUrlParametersManager() {
         return new UrlParametersManager();
@@ -57,8 +58,8 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    IOrientationChangeHandler provideOrientationChangeHandler(
-            OrientationChangeHandler orientationChangeHandler
+    IWindowStateChangeHandler provideOrientationChangeHandler(
+            WindowStateChangeHandler orientationChangeHandler
     ){
         return orientationChangeHandler;
     }
