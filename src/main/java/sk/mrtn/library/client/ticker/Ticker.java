@@ -82,14 +82,7 @@ public class Ticker implements ITicker {
         };
     }
 
-
-    /**
-     * TODO try to make it optional somehow :-)
-     * remove injection from {@link sk.mrtn.library.client.UtilsModule}
-     * and move it only to project which uses stats
-     * @param stats
-     */
-    @Inject
+    @Override
     public void setStats(final Stats stats) {
         this.stats = stats;
         if (this.stats != null) {

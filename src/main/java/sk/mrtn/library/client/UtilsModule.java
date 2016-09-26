@@ -69,15 +69,4 @@ public class UtilsModule {
         return button;
     }
 
-    /**
-     * FIXME:
-     * @see {@link sk.mrtn.library.client.ticker.Ticker#setStats(Stats)}
-     * @return
-     */
-    @Provides
-    @Singleton
-        Stats providesStats() {
-        return StatsLoader.Statics.getStats();
-    }
-
 }

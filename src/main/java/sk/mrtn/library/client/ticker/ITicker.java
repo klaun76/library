@@ -10,6 +10,8 @@ public interface ITicker {
 
     Ticker.State getState();
 
+    void setStats(Stats stats);
+
     ITickableRegistration addTickable(ITickable tickable);
 
     void pause();

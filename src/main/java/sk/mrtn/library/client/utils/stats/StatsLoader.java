@@ -4,6 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.TextResource;
+import elemental.client.Browser;
+import sk.mrtn.library.client.ticker.ITicker;
+import sk.mrtn.library.client.utils.IUrlParametersManager;
 
 import java.util.logging.Logger;
 
@@ -16,6 +19,27 @@ public interface StatsLoader {
 
         private static boolean injected;
         private static Stats stats;
+
+        /**
+         * temporary method, i did not figure out best logic way of injection
+         * and initialization ticker and stats. so for now i created this method
+         * as basic possibility how to initialize stats properly, although not
+         * automatically
+         * @param ticker - should be only one ticker per application to display stats correctly
+         * @param urlParametersManager
+         */
+        public static void initialize(
+                final ITicker ticker,
+                final IUrlParametersManager urlParametersManager
+        ){
+            if (stats == null) {
+                if (urlParametersManager.getParameter("dstats") == "true") {
+                    stats = StatsLoader.Statics.getStats();
+                    Browser.getDocument().getBody().appendChild(stats.getDom());
+                    ticker.setStats(stats);
+                }
+            }
+        }
 
         public static void ensureInjected() {
             if (injected) {
