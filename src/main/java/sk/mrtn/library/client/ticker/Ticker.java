@@ -218,6 +218,11 @@ public class Ticker implements ITicker {
 
     }
 
+    @Override
+    public void requestTick() {
+        onTick();
+    }
+
     private boolean shouldTick() {
         return this.tickRequested && this.state == State.RUNNING;
     }

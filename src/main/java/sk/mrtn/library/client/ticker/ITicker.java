@@ -28,6 +28,8 @@ public interface ITicker {
 
     double getElapsedMS();
 
+    void requestTick();
+
     enum State {
         STOPPED,PAUSED,RUNNING
     }

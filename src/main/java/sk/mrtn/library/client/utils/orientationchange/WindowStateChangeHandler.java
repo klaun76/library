@@ -1,11 +1,11 @@
 package sk.mrtn.library.client.utils.orientationchange;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import sk.mrtn.library.client.utils.orientationchange.events.IOnWindowResizedEventHandler;
 import sk.mrtn.library.client.utils.orientationchange.events.OnOrientationChangedEvent;
 import sk.mrtn.library.client.utils.orientationchange.events.OnWindowResizedEvent;
 
@@ -18,22 +18,6 @@ import javax.inject.Named;
 public class WindowStateChangeHandler implements ResizeHandler, IWindowStateChangeHandler {
 
     private boolean portrait;
-
-    public enum Orientation {
-        LANDSCAPE("landscape"),
-        PORTRAIT("portrait");
-
-        private final String orientation;
-
-        Orientation(String orientation) {
-
-            this.orientation = orientation;
-        }
-
-        public String getOrientation() {
-            return orientation;
-        }
-    }
 
     private final EventBus eventBus;
 

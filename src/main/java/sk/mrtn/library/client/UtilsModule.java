@@ -8,6 +8,8 @@ import dagger.Module;
 import dagger.Provides;
 import sk.mrtn.library.client.communication.HttpRequest;
 import sk.mrtn.library.client.communication.IHttpRequest;
+import sk.mrtn.library.client.ui.mainpanel.IRootResponsivePanel;
+import sk.mrtn.library.client.ui.mainpanel.RootResponsivePanel;
 import sk.mrtn.library.client.ui.togglebutton.IToggleButton;
 import sk.mrtn.library.client.ui.togglebutton.ToggleButton;
 import sk.mrtn.library.client.utils.IUrlParametersManager;
@@ -15,8 +17,6 @@ import sk.mrtn.library.client.utils.UrlParametersManager;
 import sk.mrtn.library.client.utils.mobiledetect.MobileDetect;
 import sk.mrtn.library.client.utils.orientationchange.IWindowStateChangeHandler;
 import sk.mrtn.library.client.utils.orientationchange.WindowStateChangeHandler;
-import sk.mrtn.library.client.utils.stats.Stats;
-import sk.mrtn.library.client.utils.stats.StatsLoader;
 import sk.mrtn.library.client.window.IWindowStateController;
 import sk.mrtn.library.client.window.WindowStateController;
 
@@ -58,10 +58,10 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    IWindowStateChangeHandler provideOrientationChangeHandler(
-            WindowStateChangeHandler orientationChangeHandler
+    IWindowStateChangeHandler provideWindowStateChangeHandler(
+            WindowStateChangeHandler windowStateChangeHandler
     ){
-        return orientationChangeHandler;
+        return windowStateChangeHandler;
     }
 
     @Provides
@@ -69,4 +69,9 @@ public class UtilsModule {
         return button;
     }
 
+    @Provides
+    @Singleton
+    IRootResponsivePanel provideIMainResponsivePanel(RootResponsivePanel mainResponsivePanel){
+        return mainResponsivePanel;
+    }
 }
