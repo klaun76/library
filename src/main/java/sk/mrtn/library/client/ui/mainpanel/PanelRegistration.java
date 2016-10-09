@@ -5,12 +5,12 @@ package sk.mrtn.library.client.ui.mainpanel;
  */
 public class PanelRegistration implements IPanelRegistration {
 
-    private final RootResponsivePanel rootResponsivePanel;
+    private final ARootPanel rootResponsivePanel;
     private final IResponsivePanel responsivePanel;
     private boolean destroyed = false;
 
 
-    public PanelRegistration(RootResponsivePanel rootResponsivePanel, IResponsivePanel responsivePanel) {
+    public PanelRegistration(ARootPanel rootResponsivePanel, IResponsivePanel responsivePanel) {
         this.rootResponsivePanel = rootResponsivePanel;
         this.responsivePanel = responsivePanel;
         this.rootResponsivePanel.getMainPanel().appendChild(this.responsivePanel.asNode());

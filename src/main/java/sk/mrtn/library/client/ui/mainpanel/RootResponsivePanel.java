@@ -23,60 +23,40 @@ import java.util.logging.Logger;
  * given resolution. if its possible to have 16:9 or in worst conditions to fit 4:3
  * TODO: create possibility to set min/max aspect ratio, max size
  */
-public class RootResponsivePanel implements IOnWindowResizedEventHandler, IRootResponsivePanel {
+public class RootResponsivePanel extends ARootPanel implements IOnWindowResizedEventHandler, IRootResponsivePanel {
 
-    private Logger LOG;
-    List<PanelRegistration> panelRegistrations;
-    private final EventBus eventBus;
+
     private final double maxWidth;
     private final double maxHeight;
     private double minAspectRatio;
     private double maxAspectRatio;
-    private DivElement mainWrapper;
-
-    public DivElement getMainPanel() {
-        if (this.mainPanel == null) {
-            throw new NullPointerException(RootResponsivePanel.class.getName() + " is not initialized");
-        }
-        return mainPanel;
-    }
-
-    private DivElement mainPanel;
 
     @Inject
     RootResponsivePanel(
             final @Named("Common") EventBus eventBus
             )
     {
-        if (LogConfiguration.loggingIsEnabled()) {
-            LOG = Logger.getLogger(RootResponsivePanel.class.getSimpleName());
-            LOG.setLevel(Level.ALL);
-        }
-        this.eventBus = eventBus;
-        this.panelRegistrations = new ArrayList<>();
+        super(eventBus);
         this.minAspectRatio = 4/3.0;
         this.maxAspectRatio = 16/9.0;
         this.maxWidth = 1280;
         this.maxHeight = 720;
-
-    }
-
-    @Override
-    public IPanelRegistration insert(IResponsivePanel responsivePanel) {
-        PanelRegistration panelRegistration = new PanelRegistration(this,responsivePanel);
-        return panelRegistration;
     }
 
     @Override
     public Node asNode() {
-        if (this.mainWrapper == null) {
-            this.mainWrapper = createMainWrapper();
-            this.mainPanel = createMainPanel();
-            this.mainWrapper.appendChild(this.mainPanel);
-            this.eventBus.addHandler(OnWindowResizedEvent.TYPE,this);
-            onWindowResized(null);
+        if (!this.initialized) {
+            initialize();
         }
         return this.mainWrapper;
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        this.mainPanel = createMainPanel();
+        this.mainWrapper.appendChild(this.mainPanel);
+        onWindowResized(null);
     }
 
     @Override
@@ -122,12 +102,14 @@ public class RootResponsivePanel implements IOnWindowResizedEventHandler, IRootR
         double finalRHeight = rHeight;
         double finalRWidth = rWidth;
         Scheduler.get().scheduleDeferred(() -> {
-            for (PanelRegistration panelRegistration : panelRegistrations) {
-                panelRegistration.onResized(finalRWidth, finalRHeight);
-            }
+            notifyRegistrations(finalRWidth, finalRHeight);
         });
     }
 
+    /**
+     * setBackgroundColor is called just for testing purposes
+     * @return
+     */
     private DivElement createMainPanel() {
         DivElement divElement = Browser.getDocument().createDivElement();
         divElement.getStyle().setPosition(CSSStyleDeclaration.Position.ABSOLUTE);
@@ -136,15 +118,4 @@ public class RootResponsivePanel implements IOnWindowResizedEventHandler, IRootR
         return divElement;
     }
 
-    private DivElement createMainWrapper() {
-        DivElement divElement = Browser.getDocument().createDivElement();
-        divElement.getStyle().setPosition(CSSStyleDeclaration.Position.ABSOLUTE);
-        divElement.getStyle().setWidth(100, CSSStyleDeclaration.Unit.PCT);
-        divElement.getStyle().setHeight(100, CSSStyleDeclaration.Unit.PCT);
-        divElement.getStyle().setBackgroundColor("darkblue");
-        divElement.getStyle().setTop(0, CSSStyleDeclaration.Unit.PX);
-        divElement.getStyle().setLeft(0, CSSStyleDeclaration.Unit.PX);
-        divElement.setId("mainWrapper");
-        return divElement;
-    }
 }

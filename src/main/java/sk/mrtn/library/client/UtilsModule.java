@@ -69,9 +69,5 @@ public class UtilsModule {
         return button;
     }
 
-    @Provides
-    @Singleton
-    IRootResponsivePanel provideIMainResponsivePanel(RootResponsivePanel mainResponsivePanel){
-        return mainResponsivePanel;
-    }
+
 }
