@@ -46,6 +46,7 @@ public abstract class ARootPanel implements IOnWindowResizedEventHandler {
     public abstract Node asNode();
 
     public void initialize() {
+        LOG.fine("initialize");
         this.initialized = true;
         createMainWrapper();
         this.eventBus.addHandler(OnWindowResizedEvent.TYPE,this);
