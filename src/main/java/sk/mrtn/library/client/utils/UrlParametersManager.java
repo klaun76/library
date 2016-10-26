@@ -79,7 +79,7 @@ public class UrlParametersManager implements IUrlParametersManager {
     @Override
     public boolean parameterEquals(String parameterName, String parameterValue) {
         String pValue = getParameter(parameterName);
-        if (pValue.equals(parameterValue)) {
+        if (pValue != null && pValue.equals(parameterValue)) {
             return true;
         } else {
             return false;
