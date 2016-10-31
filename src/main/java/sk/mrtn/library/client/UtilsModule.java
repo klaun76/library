@@ -3,18 +3,14 @@ package sk.mrtn.library.client;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.ResettableEventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
-import com.google.gwt.user.client.Window;
 import dagger.Module;
 import dagger.Provides;
 import sk.mrtn.library.client.communication.HttpRequest;
 import sk.mrtn.library.client.communication.IHttpRequest;
-import sk.mrtn.library.client.ui.mainpanel.IRootResponsivePanel;
-import sk.mrtn.library.client.ui.mainpanel.RootResponsivePanel;
 import sk.mrtn.library.client.ui.togglebutton.IToggleButton;
 import sk.mrtn.library.client.ui.togglebutton.ToggleButton;
 import sk.mrtn.library.client.utils.IUrlParametersManager;
 import sk.mrtn.library.client.utils.UrlParametersManager;
-import sk.mrtn.library.client.utils.mobiledetect.MobileDetect;
 import sk.mrtn.library.client.utils.orientationchange.IWindowStateChangeHandler;
 import sk.mrtn.library.client.utils.orientationchange.WindowStateChangeHandler;
 import sk.mrtn.library.client.window.IWindowStateController;
@@ -37,11 +33,6 @@ public class UtilsModule {
     @Provides @Singleton
     IUrlParametersManager provideIUrlParametersManager() {
         return new UrlParametersManager();
-    }
-
-    @Provides @Singleton
-    MobileDetect provideMobileDetect() {
-        return new MobileDetect(Window.Navigator.getUserAgent());
     }
 
     @Provides

@@ -28,6 +28,7 @@ public class MobileDetect {
 
     // PUBLIC METHODS
 
+    @Deprecated
     @JsMethod
     public native String mobile();
     @JsMethod
