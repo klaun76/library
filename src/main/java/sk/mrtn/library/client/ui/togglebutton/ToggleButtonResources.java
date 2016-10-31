@@ -10,7 +10,7 @@ import com.google.gwt.resources.client.CssResource;
 public interface ToggleButtonResources extends ClientBundle {
     ToggleButtonResources impl = GWT.create(ToggleButtonResources.class);
 
-    @Source("togglebutton.css")
+    @Source("togglebutton.gss")
     ToggleButtonResource css();
 
     interface ToggleButtonResource extends CssResource {
