@@ -35,7 +35,7 @@ public interface StatsLoader {
             if (stats == null) {
                 if (urlParametersManager.getParameter("dstats") == "true") {
                     stats = StatsLoader.Statics.getStats();
-                    Browser.getDocument().getBody().appendChild(stats.getDom());
+                    Browser.getDocument().getBody().appendChild(stats.dom);
                     ticker.setStats(stats);
                 }
             }

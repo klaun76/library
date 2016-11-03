@@ -10,32 +10,24 @@ package sk.mrtn.library.client.utils.stats;
  */
 
 import elemental.dom.Node;
-import jsinterop.annotations.JsMethod;
-import jsinterop.annotations.JsProperty;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
-public interface Stats {
+public class Stats {
 
-    @JsProperty(name = "REVISION")
-    int getREVISION();
+    public int REVISION;
 
-    @JsProperty(name = "dom")
-    Node getDom();
 
-    @JsMethod
-    void addPanel(Node a);
+    public Node dom;
 
-    @JsMethod
-    void showPanel(int type); // 0: fps, 1: ms, 2: mb, 3+: custom
+    public native void addPanel(Node a);
 
-    @JsMethod
-    void begin();
+    public native void showPanel(int type); // 0: fps, 1: ms, 2: mb, 3+: custom
 
-    @JsMethod
-    void end();
+    public native void begin();
 
-    @JsMethod
-    void update();
+    public native void end();
+
+    public native void update();
 
 }
