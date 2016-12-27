@@ -53,7 +53,7 @@ public class BrowserStorage implements IStorage {
 
     @Override
     public void initialize(String reference) {
-        Logger.getLogger("common").warning("reference: "+reference);
+        Logger.getLogger("common").finest("Browser storage initiated, reference: "+reference);
         this.reference = reference;
         if (this.reference == null) {
             this.reference = "";
