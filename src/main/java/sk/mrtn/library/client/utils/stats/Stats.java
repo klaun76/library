@@ -10,6 +10,8 @@ package sk.mrtn.library.client.utils.stats;
  */
 
 import elemental.dom.Node;
+import jsinterop.annotations.JsIgnore;
+import jsinterop.annotations.JsOverlay;
 import jsinterop.annotations.JsType;
 
 @JsType(isNative = true)
@@ -17,10 +19,15 @@ public class Stats {
 
     public int REVISION;
 
-
     public Node dom;
 
-    public native void addPanel(Node a);
+    /**
+     *  method was in original code, but compiler threw waring so i desabled it
+     *  because it's not used anyway.
+     *  Warnings in sk/mrtn/library/client/utils/stats/Stats.java
+     *  [WARN] Line 25: [unusable-by-js] Type of parameter 'a' in 'void Stats.addPanel(Node)' is not usable by but exposed to JavaScript.
+     */
+    // public native void addPanel(Node node);
 
     public native void showPanel(int type); // 0: fps, 1: ms, 2: mb, 3+: custom
 
