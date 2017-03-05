@@ -12,7 +12,10 @@ import java.util.Objects;
 /**
  * DeviceTypeGenerator creates the implementation for
  * {@link sk.mrtn.library.client.device.IDeviceType} for each device.
- *
+ * look at Library.gwt.xml file and <define-property name="sk.mrtn.devicetype"
+ * and next property-provider, which is javascript snippet
+ * until now is only one generator that i've created so i hope i will not
+ * delete it and recycle knowledge :-)
  * @author klaun
  */
 
