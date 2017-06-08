@@ -192,6 +192,15 @@ public class Ticker implements ITicker {
     }
 
     private void onTick() {
+        new Timer() {
+            @Override
+            public void run() {
+                doTick();
+            }
+        }.schedule(0);
+    }
+
+    private void doTick() {
         if (this.state == State.RUNNING) {
             if (this.stats != null) {
                 this.stats.begin();
