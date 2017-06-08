@@ -24,7 +24,7 @@ public interface MobileDetectLoader {
             injected = true;
 
             final Resources res = GWT.create(Resources.class);
-            ScriptInjector.FromString instance = ScriptInjector.fromString(res.hammer().getText());
+            ScriptInjector.FromString instance = ScriptInjector.fromString(res.jsresource().getText());
             instance.setWindow(ScriptInjector.TOP_WINDOW);
             instance.inject();
             Logger.getLogger("common").fine("Mobile detect loaded");
@@ -33,7 +33,7 @@ public interface MobileDetectLoader {
         protected interface Resources extends ClientBundle {
             @Source("mobile-detect.min.js")
 //            @Source("mobile-detect.js")
-            TextResource hammer();
+            TextResource jsresource();
         }
 
     }
