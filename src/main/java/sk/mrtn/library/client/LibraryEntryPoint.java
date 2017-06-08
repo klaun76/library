@@ -2,6 +2,7 @@ package sk.mrtn.library.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import sk.mrtn.library.client.develop.console.Debugging;
+import sk.mrtn.library.client.utils.es6promise.Es6promise;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,5 +20,6 @@ public class LibraryEntryPoint implements EntryPoint {
         common = Logger.getLogger("common");
         common.setLevel(Level.INFO);
         Logger.getLogger("common").info("LibraryEntryPoint onModuleLoad");
+        Es6promise.Statics.ensureInjected();
     }
 }
