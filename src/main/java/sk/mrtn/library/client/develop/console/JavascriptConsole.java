@@ -26,7 +26,7 @@ public class JavascriptConsole extends AConsole {
 
     protected native void info(final String message) /*-{
 		if (typeof $wnd.console.debug == "function") {
-			$wnd.console.debug(message);
+			$wnd.console.info('%c ' + message, 'color:blue');
 		} else {
 			$wnd.console.log(message);
 		}
