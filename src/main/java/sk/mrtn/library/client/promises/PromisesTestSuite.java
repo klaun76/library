@@ -52,7 +52,7 @@ public class PromisesTestSuite {
                 .then(new IPromiseCallback() {
                     @Override
                     public Object exec(Object o) {
-                        return getPromise(timedelay, false, 3, o + "c3");
+                        return getPromise(timedelay, true, 3, o + "c3");
                     }
                 })
                 .then(new IPromiseCallback() {
@@ -102,7 +102,7 @@ public class PromisesTestSuite {
                             public void run() {
                                 log("rejectCallback ["+id+"] " + data);
                                 reject.exec(data);
-//                                throw new NullPointerException("hovno");
+//                                throw new NullPointerException("testThrow");
                             }
                         }.schedule(time);
                     }
