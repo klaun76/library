@@ -1,5 +1,7 @@
 package sk.mrtn.library.client.communication;
 
+import sk.mrtn.library.client.promises.Promise;
+
 /**
  * Created by martinliptak on 05/05/16.
  * E – Element (used extensively by the Java Collections Framework, for example ArrayList, Set etc.)
@@ -15,4 +17,5 @@ public interface IHttpRequest {
         void onError();
     }
     IHttpRequestRegistration sendRequest(IOnLoadeFinishedListener onLoadeFinishedListener, String url);
+    Promise sendRequest( String url);
 }

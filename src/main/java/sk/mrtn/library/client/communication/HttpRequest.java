@@ -1,7 +1,11 @@
 package sk.mrtn.library.client.communication;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.*;
 import com.google.gwt.logging.client.LogConfiguration;
+import sk.mrtn.library.client.promises.IPromiseFulfill;
+import sk.mrtn.library.client.promises.IPromiseReject;
+import sk.mrtn.library.client.promises.Promise;
 
 import javax.inject.Inject;
 import java.util.logging.Level;
@@ -23,9 +27,29 @@ public class HttpRequest implements IHttpRequest, IHttpRequestRegistration, Requ
     private IOnLoadeFinishedListener onLoadeFinishedListener;
     private RequestBuilder requestBuilder;
     private Request request;
+    private IPromiseFulfill fulfill;
+    private IPromiseReject reject;
 
     @Inject
     HttpRequest(){}
+
+    @Override
+    public Promise sendRequest(String url) {
+        return new Promise((fulfill, reject) -> {
+            this.fulfill = fulfill;
+            this.reject = reject;
+            this.requestBuilder = new RequestBuilder(RequestBuilder.POST, url);
+            this.requestBuilder.setHeader("Content-type", "application/x-www-form-urlencoded");
+            this.requestBuilder.setTimeoutMillis(5000);
+            try {
+                this.request = requestBuilder.sendRequest(null, this);
+            } catch (RequestException e) {
+                if (LogConfiguration.loggingIsEnabled()) LOG.severe("<< fail");
+                reject.exec(null);
+            }
+
+        });
+    }
 
     @Override
     public IHttpRequestRegistration sendRequest(IOnLoadeFinishedListener onLoadeFinishedListener, String url) {
@@ -54,17 +78,32 @@ public class HttpRequest implements IHttpRequest, IHttpRequestRegistration, Requ
     public void onResponseReceived(Request request, Response httpResponse) {
         switch (httpResponse.getStatusCode()) {
             case 200:
-                this.onLoadeFinishedListener.onSuccess(httpResponse.getText());
+                if (this.onLoadeFinishedListener != null) {
+                    this.onLoadeFinishedListener.onSuccess(httpResponse.getText());
+                }
+                if (this.fulfill != null) {
+                    this.fulfill.exec(httpResponse.getText());
+                }
                 break;
             default:
                 if (LogConfiguration.loggingIsEnabled()) LOG.severe("<< onResponseReceived: "+httpResponse.getStatusCode());
-                this.onLoadeFinishedListener.onError();
+                if (this.onLoadeFinishedListener != null) {
+                    this.onLoadeFinishedListener.onError();
+                }
+                if (this.reject != null) {
+                    this.reject.exec(null);
+                }
         }
     }
 
     @Override
     public void onError(Request request, Throwable exception) {
         if (LogConfiguration.loggingIsEnabled()) LOG.severe("<< onError: "+exception.getMessage());
-        this.onLoadeFinishedListener.onError();
+        if (this.onLoadeFinishedListener != null) {
+            this.onLoadeFinishedListener.onError();
+        }
+        if (this.reject != null) {
+            this.reject.exec(null);
+        }
     }
 }
