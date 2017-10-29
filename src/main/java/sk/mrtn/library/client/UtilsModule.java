@@ -7,6 +7,7 @@ import dagger.Module;
 import dagger.Provides;
 import sk.mrtn.library.client.communication.HttpRequest;
 import sk.mrtn.library.client.communication.IHttpRequest;
+import sk.mrtn.library.client.tweenengine.TickableTweenManager;
 import sk.mrtn.library.client.ui.togglebutton.IToggleButton;
 import sk.mrtn.library.client.ui.togglebutton.ToggleButton;
 import sk.mrtn.library.client.utils.IUrlParametersManager;
@@ -36,7 +37,7 @@ public class UtilsModule {
     }
 
     @Provides
-    IHttpRequest provideILoader (HttpRequest loader) {
+    IHttpRequest provideIHttpRequest (HttpRequest loader) {
         return loader;
     }
 
@@ -45,6 +46,13 @@ public class UtilsModule {
     @Named("Common")
     EventBus provideCommonEventBus() {
         return new ResettableEventBus(new SimpleEventBus());
+    }
+
+    @Provides
+    @Singleton
+    @Named("Common")
+    TickableTweenManager provideCommonTickableTweenManager(TickableTweenManager tickableTweenManager) {
+        return tickableTweenManager;
     }
 
     @Provides
