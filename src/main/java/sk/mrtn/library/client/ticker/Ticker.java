@@ -94,6 +94,10 @@ public class Ticker implements ITicker {
 
     @Override
     public ITickableRegistration addTickable(ITickable tickable) {
+        if (!this.ticking) {
+            this.currentTick = getCurrentTick();
+            this.previousTick = this.currentTick;
+        }
         TickableRegistration tickableRegistration = new TickableRegistration(this, tickable);
         this.tickables.add(tickableRegistration);
         requestAnimationFrame();
