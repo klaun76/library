@@ -1,6 +1,5 @@
 package sk.mrtn.library.client.communication;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.*;
 import com.google.gwt.logging.client.LogConfiguration;
 import sk.mrtn.library.client.promises.IPromiseFulfill;
